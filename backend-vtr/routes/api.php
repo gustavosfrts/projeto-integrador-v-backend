@@ -29,3 +29,4 @@ Route::get('/teste', function (){
     dd(asset('storage/products/narciso.png'));
 });
 Route::post("/login", [AuthController::class, "login"]);
+Route::post("/register", [AuthController::class, "register"]);

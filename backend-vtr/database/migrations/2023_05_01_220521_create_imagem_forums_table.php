@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('imagem_forums', function (Blueprint $table) {
             $table->id();
             $table->string('caminho');
-            $table->foreign('forum_id')->references('id')->on('forum');
-            $table->foreign('comentario_id')->references('id')->on('comentarios');
+            $table->foreignId('forum_id')->references('id')->on('forum');
+            $table->foreignId('comentario_id')->references('id')->on('comentarios');
             $table->timestamps();
         });
     }

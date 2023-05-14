@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('imagem_produtos', function (Blueprint $table) {
             $table->id();
             $table->string('caminho');
-            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->foreignId('produto_id')->references('id')->on('produtos');
             $table->timestamps();
         });
     }

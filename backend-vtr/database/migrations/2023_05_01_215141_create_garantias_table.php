@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('garantias', function (Blueprint $table) {
             $table->id();
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
-            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->foreignId('usuario_id')->references('id')->on('usuarios');
+            $table->foreignId('produto_id')->references('id')->on('produtos');
             $table->string('hash', 32)->unique();
             $table->timestamps();
         });

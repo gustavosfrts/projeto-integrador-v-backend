@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('like_forum', function (Blueprint $table) {
             $table->id();
-            $table->foreign('forum_id')->references('forum_id')->on('forum');
+            $table->foreignId('forum_id')->references('id')->on('forum');
             $table->timestamps();
         });
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('like_comentarios', function (Blueprint $table) {
             $table->id();
-            $table->foreign('comentario_id')->references('id')->on('comentarios');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreignId('comentario_id')->references('id')->on('comentarios');
+            $table->foreignId('usuario_id')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

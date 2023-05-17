@@ -17,4 +17,15 @@ class Produto extends Model
                     ->get();
         return $response;
     }
+
+    static function listagemProdutoLogado($userId){
+        $response = DB::table('usuarios')
+            ->select('produtos.nome', 'produtos.descricao', 'imagem_produtos.caminho')
+            ->join('usuario_produtos', 'usuario_produtos.usuario_id', '=', "usuarios.id")
+            ->join('produtos', 'usuario_produtos.produto_id', '=', 'produtos.id')
+            ->join('imagem_produtos', 'produtos.id', '=', 'imagem_produtos.produto_id')
+            ->where('usuarios.id', '=', $userId)
+            ->get();
+        return $response;
+    }
 }

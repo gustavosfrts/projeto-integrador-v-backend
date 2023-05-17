@@ -22,11 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => ['jwt.auth']], function (){
+    Route::prefix('auth/produtos')->group(function (){
+        Route::get('/', [Produto::class, 'listagemProdutosLogado'])->name('api.produtos.listagem');
+    });
+});
+
 Route::prefix('produtos')->group(function (){
     Route::get('/', [Produto::class, 'listagemProdutos'])->name('api.produtos.listagem');
 });
-Route::get('/teste', function (){
-    dd(asset('storage/products/narciso.png'));
-});
+
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/register", [AuthController::class, "register"]);

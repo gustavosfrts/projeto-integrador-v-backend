@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produto as ModelProduto;
-use mysql_xdevapi\Exception;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class Produto extends Controller

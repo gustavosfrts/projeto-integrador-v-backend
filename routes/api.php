@@ -6,6 +6,8 @@ use App\Http\Resource\UserResource;
 use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Produto;
+use App\Http\Controllers\Garantia;
+use App\Http\Controllers\Manual;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +24,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => ['jwt.auth']], function (){
-    Route::prefix('auth/produtos')->group(function (){
+Route::group(['middleware' => ['jwt.auth']], function () {
+    Route::prefix('auth/produtos')->group(function () {
         Route::get('/', [Produto::class, 'listagemProdutosLogado'])->name('api.produtos.listagem');
+    });
+    Route::prefix('garantias')->group(function () {
+        Route::get('/', [Garantia::class, 'listagemGarantias'])->name('api.garantias.listagem');
+    });
+    Route::prefix('manuais')->group(function () {
+        Route::get('/', [Manual::class, 'listagemManuais'])->name('api.manuais.listagem');
     });
 });
 
-Route::prefix('produtos')->group(function (){
+Route::prefix('produtos')->group(function () {
     Route::get('/', [Produto::class, 'listagemProdutos'])->name('api.produtos.listagem');
 });
 

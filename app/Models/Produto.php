@@ -12,7 +12,7 @@ class Produto extends Model
 
     static function listagemProduto(){
         $response = DB::table('produtos')
-                    ->select('produtos.nome', 'produtos.descricao', 'imagem_produtos.caminho')
+                    ->select('produtos.nome', 'produtos.descricao', 'imagem_produtos.caminho', 'produtos.link_video', 'produtos.link')
                     ->join('imagem_produtos', 'produtos.id', '=', 'imagem_produtos.produto_id')
                     ->get();
         return $response;
@@ -20,7 +20,7 @@ class Produto extends Model
 
     static function listagemProdutoLogado($userId){
         $response = DB::table('usuarios')
-            ->select('produtos.nome', 'produtos.descricao', 'imagem_produtos.caminho')
+            ->select('produtos.nome', 'produtos.descricao', 'imagem_produtos.caminho', 'produtos.link_video', 'produtos.link')
             ->join('usuario_produtos', 'usuario_produtos.usuario_id', '=', "usuarios.id")
             ->join('produtos', 'usuario_produtos.produto_id', '=', 'produtos.id')
             ->join('imagem_produtos', 'produtos.id', '=', 'imagem_produtos.produto_id')

@@ -34,8 +34,8 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('/', [Manual::class, 'listagemManuais'])->name('api.manuais.listagem');
     });
     Route::prefix('perfis')->group(function () {
-        Route::get('/', [Perfil::class, 'pefil'])->name('api.pefil');
-        Route::put('/', [Perfil::class, 'update'])->name('api.pefil.update');
+        Route::get('/', [Perfil::class, 'perfil'])->name('api.perfil');
+        Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
     });
 });
 

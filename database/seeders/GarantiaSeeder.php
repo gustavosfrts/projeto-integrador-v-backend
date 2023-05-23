@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Garantia;
 
-class produtoSeeder extends Seeder
+class GarantiaSeeder extends Seeder
 {
     /**
      * Run the database seeds.

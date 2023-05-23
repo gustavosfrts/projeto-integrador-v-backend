@@ -27,9 +27,15 @@ class Perfil extends Controller
     public function update(Request $request) {
         try {
             $id = $request->user()->attributesToArray()['id'];
-            $imagemPerfil = ImagemPerfil::updateImagemPerfil($id, $request->imagem);
+            $fields = $request->only('nome', 'email', 'cpfcnpj', 'telefone');
+            foreach ($fields as $key => $value) {
+                if ($value == null) {
+                    unset($fields[$key]);
+                }
+            }
+            Usuario::updateUsusario($id, $fields);
 
-            return response()->json($imagemPerfil, 200);
+            return response()->json(200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Erro: ' . $e->getMessage()

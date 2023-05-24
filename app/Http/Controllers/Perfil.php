@@ -12,9 +12,9 @@ class Perfil extends Controller
     public function perfil(Request $request)
     {
         try {
-            $id = $request->user()->attributesToArray()['id'];
-            $response = Usuario::getUsuario($id);
-            $response['imagem_perfil'] = ImagemPerfil::getImagemPerfil($id);
+            $user = $request->user();
+            $response = $user;
+            $response['imagem_perfil'] = ImagemPerfil::getImagemPerfil($user->id);
 
             return response()->json($response, 200);
         } catch (Exception $e) {

@@ -57,8 +57,4 @@ class Usuario extends Authenticatable implements JWTSubject
         return [];
     }
 
-    static function updateUsusario($id, array $array)
-    {
-        return Usuario::update()->where('id', $id);
-    }
 }

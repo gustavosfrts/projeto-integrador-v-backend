@@ -15,22 +15,22 @@ class GarantiaSeeder extends Seeder
     {
         Garantia::create([
             'usuario_id' => 1,
-            'prdouto_id' => 1,
+            'produto_id' => 1,
             'hash' => 'osidnvpaiengapisdbf',
         ]);
         Garantia::create([
             'usuario_id' => 1,
-            'prdouto_id' => 2,
+            'produto_id' => 2,
             'hash' => 'fasdfsdgadfgadfg',
         ]);
         Garantia::create([
             'usuario_id' => 1,
-            'prdouto_id' => 3,
+            'produto_id' => 3,
             'hash' => 'adhadfgasdfasdfarw',
         ]);
         Garantia::create([
             'usuario_id' => 1,
-            'prdouto_id' => 4,
+            'produto_id' => 4,
             'hash' => 'wegawreqhqdfhbaetu',
         ]);
     }

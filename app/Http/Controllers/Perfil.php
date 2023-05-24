@@ -26,15 +26,18 @@ class Perfil extends Controller
 
     public function update(Request $request) {
         try {
-            $id = $request->user()->attributesToArray()['id'];
             $fields = $request->only('nome', 'email', 'cpfcnpj', 'telefone');
             foreach ($fields as $key => $value) {
                 if ($value == null) {
                     unset($fields[$key]);
                 }
             }
-            Usuario::updateUsusario($id, $fields);
 
+            $user = $request->user();
+            foreach ($fields as $key => $value){
+                $user[$key] = $value;
+            }
+            $user->save();
             return response()->json(200);
         } catch (Exception $e) {
             return response()->json([

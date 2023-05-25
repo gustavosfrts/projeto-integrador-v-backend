@@ -2,12 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Resource\UserResource;
-use App\Models\User;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Produto;
 use App\Http\Controllers\Garantia;
 use App\Http\Controllers\Manual;
+use App\Http\Controllers\Perfil;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +32,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     });
     Route::prefix('manuais')->group(function () {
         Route::get('/', [Manual::class, 'listagemManuais'])->name('api.manuais.listagem');
+    });
+    Route::prefix('perfis')->group(function () {
+        Route::get('/', [Perfil::class, 'perfil'])->name('api.perfil');
+        Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
     });
 });
 

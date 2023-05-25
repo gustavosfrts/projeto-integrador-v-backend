@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Produto extends Controller
 {
-    function listagemProdutos(Request $request){
+    function listagemProdutos(Request $request)
+    {
         try {
             $response = ModelProduto::listagemProduto();
             return response()->json([
@@ -23,7 +24,8 @@ class Produto extends Controller
             ], 500);
         }
     }
-    function listagemProdutosLogado(Request $request){
+    function listagemProdutosLogado(Request $request)
+    {
         try {
             $response = ModelProduto::listagemProdutoLogado(Auth::user()->id);
             return response()->json([
@@ -36,5 +38,10 @@ class Produto extends Controller
                 'error' => 'Erro: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    function transferencia(Request $request)
+    {
+        $params = $request->only('usuario_produto_id', 'new_user_email');
     }
 }

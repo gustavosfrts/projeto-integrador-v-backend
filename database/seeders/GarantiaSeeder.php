@@ -30,7 +30,7 @@ class GarantiaSeeder extends Seeder
         ]);
         Garantia::create([
             'usuario_id' => 1,
-            'produto_id' => 4,
+            'produto_id' => 3,
             'hash' => 'wegawreqhqdfhbaetu',
         ]);
     }

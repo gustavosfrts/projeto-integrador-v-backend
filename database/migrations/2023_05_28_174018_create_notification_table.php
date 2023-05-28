@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuario_produtos', function (Blueprint $table) {
+        Schema::create('notificacao', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('produto_id')->references('id')->on('produtos');
             $table->foreignId('usuario_id')->references('id')->on('usuarios');
+            $table->string('token');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('');
+        Schema::dropIfExists('notificacao');
     }
 };

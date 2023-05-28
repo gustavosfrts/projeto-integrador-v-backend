@@ -7,6 +7,7 @@ use App\Http\Controllers\Produto;
 use App\Http\Controllers\Garantia;
 use App\Http\Controllers\Manual;
 use App\Http\Controllers\Perfil;
+use \App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,15 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('/', [Perfil::class, 'perfil'])->name('api.perfil');
         Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
     });
+
+    Route::prefix('notificacao')->group(function () {
+        Route::get('/regastar-token', [NotificationController::class, 'resgatarNotificacao'])->name('api.notificacao.resgatar.token');
+        Route::post('/cadastro-token', [NotificationController::class, 'cadastroNotificacao'])->name('api.notificacao.cadastro.token');
+    });
+});
+
+Route::prefix('notificacao')->group(function () {
+    Route::post('/enviar', [NotificationController::class, 'enviarNotificacao'])->name('api.notificacao.enviar');
 });
 
 Route::prefix('produtos')->group(function () {

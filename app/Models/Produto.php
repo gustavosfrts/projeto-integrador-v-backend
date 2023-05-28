@@ -28,4 +28,7 @@ class Produto extends Model
             ->get();
         return $response;
     }
+    static function nomeProduto(int $produtoId) {
+        return self::select('nome')->where('id', $produtoId)->first()->nome;
+    }
 }

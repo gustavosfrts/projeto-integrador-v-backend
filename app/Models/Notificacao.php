@@ -17,7 +17,9 @@ class Notificacao extends Model
     ];
 
     static function cadastroNotificacao(int $usuario_id, string $token) {
-        if (!self::where('usuario_id', $usuario_id)->exists()) {
+        if (!self::where('token', $token)->exists()) {
+            self::where('token', $token)->delete();
+
             self::create([
                'usuario_id' => $usuario_id,
                 'token' => $token

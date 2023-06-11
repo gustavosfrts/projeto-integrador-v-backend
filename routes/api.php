@@ -8,6 +8,7 @@ use App\Http\Controllers\Garantia;
 use App\Http\Controllers\Manual;
 use App\Http\Controllers\Perfil;
 use App\Http\Controllers\Forum;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,10 +49,13 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::put('/{id}', [Forum::class, 'updateForum'])->name('api.forum.update');
         Route::delete('/{id}', [Forum::class, 'deleteForum'])->name('api.forum.delete');
         Route::prefix('comentarios')->group(function () {
-            Route::post('/', [Forum::class, 'createComentario'])->name('api.comentario.create');
-            Route::put('/{id}', [Forum::class, 'updateComentario'])->name('api.comentario.update');
-            Route::delete('/{id}', [Forum::class, 'deleteComentario'])->name('api.comentario.delete');
+            Route::post('/', [Forum::class, 'createComentario'])->name('api.comentarios.create');
+            Route::put('/{id}', [Forum::class, 'updateComentario'])->name('api.comentarios.update');
+            Route::delete('/{id}', [Forum::class, 'deleteComentario'])->name('api.comentarios.delete');
         });
+    });
+    Route::prefix('images')->group(function () {
+        Route::post('upload', [ImageController::class, 'storeImage'])->name('api.images.upload');
     });
 });
 

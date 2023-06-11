@@ -108,6 +108,12 @@ class Forum extends Controller
                 'comentario' => 'required|string'
             ]);
             $forum = ModelsForum::find($id);
+            if (!$forum) {
+                return response()->json([
+                    'data' => null,
+                    'error' => 'Forum não encontrado'
+                ], 404);
+            }
             $forum->titulo = $request->titulo;
             $forum->descricao = $request->descricao;
             $forum->usuario_id = $request->user()->id;
@@ -156,12 +162,14 @@ class Forum extends Controller
         try {
             $request->validate([
                 'comentario' => 'required|string',
-                'forum_id' => 'required|integer'
+                'forum_id' => 'required|integer',
+                'comentario_id' => 'integer'
             ]);
             $comentario = new Comentario();
             $comentario->comentario = $request->comentario;
             $comentario->usuario_id = $request->user()->id;
             $comentario->forum_id = $request->forum_id;
+            $comentario->comentario_id = $request->comentario_id;
             $comentario->save();
             return response()->json([
                 'data' => $comentario,

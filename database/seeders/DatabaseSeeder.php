@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(produtoSeeder::class);
         $this->call(UsuarioProdutosSeeder::class);
         $this->call(GarantiaSeeder::class);
+        $this->call(ForumSeeder::class);
+        $this->call(ComentarioSeeder::class);
         // \App\Models\Usuario::factory(10)->create();
 
         // \App\Models\Usuario::factory()->create([

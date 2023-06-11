@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('comentario');
             $table->foreignId('usuario_id')->references('id')->on('usuarios');
             $table->foreignId('forum_id')->references('id')->on('forum');
-            $table->foreignId('comentario_id')->references('id')->on('comentarios');
+            $table->foreignId('comentario_id')->nullable()->default(null)->references('id')->on('comentarios');
             $table->timestamps();
         });
     }

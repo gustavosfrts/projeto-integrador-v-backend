@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Comentario;
 use App\Models\Forum as ModelsForum;
+use App\Models\ImagemForum;
+use App\Models\LikeComentario;
 use App\Models\Usuario;
 use Exception;
 use Illuminate\Http\Request;
@@ -163,14 +165,25 @@ class Forum extends Controller
             $request->validate([
                 'comentario' => 'required|string',
                 'forum_id' => 'required|integer',
-                'comentario_id' => 'integer'
+                'comentario_id' => 'integer',
+                'path' => 'string'
             ]);
+
             $comentario = new Comentario();
             $comentario->comentario = $request->comentario;
             $comentario->usuario_id = $request->user()->id;
             $comentario->forum_id = $request->forum_id;
             $comentario->comentario_id = $request->comentario_id;
             $comentario->save();
+
+            if ($request->path) {
+                $imagem = new ImagemForum();
+                $imagem->caminho = $request->path;
+                $imagem->forum_id = $request->forum_id;
+                $imagem->comentario_id = $comentario->id;
+                $imagem->save();
+            }
+
             return response()->json([
                 'data' => $comentario,
                 'error' => null
@@ -216,6 +229,42 @@ class Forum extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'data' => null,
+                'error' => 'Erro: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    function likeComentario(Request $request, $id)
+    {
+        try {
+            $like = new LikeComentario();
+            $like->usuario_id = $request->user()->id;
+            $like->comentario_id = $id;
+            $like->save();
+            return response()->json([
+                'data' => $like,
+                'error' => null
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => null,
+                'error' => 'Erro: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    function unlikeComentario(Request $request, $id)
+    {
+        try {
+            $like = LikeComentario::where('usuario_id', $request->user()->id)->where('comentario_id', $id)->first();
+            $like->delete();
+            return response()->json([
+                'data' => $like,
+                'error' => null
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'data' => $like,
                 'error' => 'Erro: ' . $e->getMessage()
             ], 500);
         }

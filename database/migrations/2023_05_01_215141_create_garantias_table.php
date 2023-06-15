@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('garantias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->references('id')->on('usuarios');
-            $table->foreignId('produto_id')->references('id')->on('produtos');
+            $table->foreignId('usuario_produto_id')->references('id')->on('usuario_produtos');
             $table->string('hash', 32)->unique();
             $table->timestamps();
         });

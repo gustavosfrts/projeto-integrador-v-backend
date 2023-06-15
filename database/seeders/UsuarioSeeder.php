@@ -18,10 +18,15 @@ class UsuarioSeeder extends Seeder
             'nome' => "conta de teste",
             'email' => "teste@teste.com.br",
             'cpfcnpj' => '123.456.789-10',
+            'telefone' => '55 27 98888-7777',
+            'password' => Hash::make("1234567890"),
+        ]);
+        Usuario::create([
+            'nome' => "conta de teste 2",
+            'email' => "teste2@teste.com.br",
             'cpfcnpj' => '123.456.789-10',
             'telefone' => '55 27 98888-7777',
             'password' => Hash::make("1234567890"),
-            'cpfcnpj' => '123.456.789-10',
         ]);
     }
 }

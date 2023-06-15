@@ -39,6 +39,10 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
     });
 
+    Route::prefix('transferencia')->group(function () {
+        Route::post('/', [Produto::class, 'transferencia'])->name('api.tranferencia');
+    });
+
     Route::prefix('notificacao')->group(function () {
         Route::get('/regastar-token', [NotificationController::class, 'resgatarNotificacao'])->name('api.notificacao.resgatar.token');
         Route::post('/cadastro-token', [NotificationController::class, 'cadastroNotificacao'])->name('api.notificacao.cadastro.token');
@@ -47,6 +51,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
 Route::prefix('notificacao')->group(function () {
     Route::post('/enviar', [NotificationController::class, 'enviarNotificacao'])->name('api.notificacao.enviar');
+
 });
 
 Route::prefix('produtos')->group(function () {

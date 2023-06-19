@@ -37,6 +37,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::prefix('perfis')->group(function () {
         Route::get('/', [Perfil::class, 'perfil'])->name('api.perfil');
         Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
+        Route::post('/image', [Perfil::class, 'putImage'])->name('api.perfil.put.image');
     });
 
     Route::prefix('transferencia')->group(function () {

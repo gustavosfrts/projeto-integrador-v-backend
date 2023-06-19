@@ -45,4 +45,27 @@ class Perfil extends Controller
             ], 500);
         }
     }
+
+    public function putImage(Request $request)
+    {
+        try {
+            if ($request->hasFile('image'))
+            {
+                $extensao = $request->file('image')->getClientOriginalExtension();
+                $nomeOriginal = explode('.', $request->file('image')->getClientOriginalName())[0];
+                $nome = uniqid(time()) . $nomeOriginal . ".$extensao";
+                $arquivo = $request->file('image')->move(public_path('storage/imagem_perfil/'), $nome);
+                return response()->json([
+                    'data' => $arquivo->getFilename()
+                ], 200);
+            }
+            return response()->json([
+                'error' => 'Não foi informado nenhuma imagem.'
+            ], 400);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Erro: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

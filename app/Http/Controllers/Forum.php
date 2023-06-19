@@ -41,6 +41,7 @@ class Forum extends Controller
             $comentarios = Comentario::where('forum_id', $id)->get();
             foreach ($comentarios as $comentario) {
                 $comentario->usuario = Usuario::select('id', 'nome', 'email')->where('id', $comentario->usuario_id)->get();
+                $comentario->likes = LikeComentario::where('comentario_id', $comentario->id)->count();
             }
             $comentariosAninhados = [];
             $comentariosArray = $comentarios->toArray();

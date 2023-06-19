@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GarantiaSeeder::class);
         $this->call(ForumSeeder::class);
         $this->call(ComentarioSeeder::class);
+        $this->call(LikeComentarioSeeder::class);
         // \App\Models\Usuario::factory(10)->create();
 
         // \App\Models\Usuario::factory()->create([

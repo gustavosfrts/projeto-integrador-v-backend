@@ -9,6 +9,7 @@ use App\Http\Controllers\Manual;
 use App\Http\Controllers\Perfil;
 use App\Http\Controllers\Forum;
 use App\Http\Controllers\ImageController;
+use \App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::prefix('perfis')->group(function () {
         Route::get('/', [Perfil::class, 'perfil'])->name('api.perfil');
         Route::put('/', [Perfil::class, 'update'])->name('api.perfil.update');
+        Route::post('/image', [Perfil::class, 'putImage'])->name('api.perfil.put.image');
     });
+
     Route::prefix('transferencia')->group(function () {
         Route::post('/', [Produto::class, 'transferencia'])->name('api.tranferencia');
     });
@@ -59,6 +62,16 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::prefix('images')->group(function () {
         Route::post('upload', [ImageController::class, 'storeImage'])->name('api.images.upload');
     });
+
+    Route::prefix('notificacao')->group(function () {
+        Route::get('/regastar-token', [NotificationController::class, 'resgatarNotificacao'])->name('api.notificacao.resgatar.token');
+        Route::post('/cadastro-token', [NotificationController::class, 'cadastroNotificacao'])->name('api.notificacao.cadastro.token');
+    });
+});
+
+Route::prefix('notificacao')->group(function () {
+    Route::post('/enviar', [NotificationController::class, 'enviarNotificacao'])->name('api.notificacao.enviar');
+
 });
 
 Route::prefix('produtos')->group(function () {

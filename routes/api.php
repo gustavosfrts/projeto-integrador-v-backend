@@ -7,6 +7,8 @@ use App\Http\Controllers\Produto;
 use App\Http\Controllers\Garantia;
 use App\Http\Controllers\Manual;
 use App\Http\Controllers\Perfil;
+use App\Http\Controllers\Forum;
+use App\Http\Controllers\ImageController;
 use \App\Http\Controllers\NotificationController;
 
 /*
@@ -42,6 +44,23 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 
     Route::prefix('transferencia')->group(function () {
         Route::post('/', [Produto::class, 'transferencia'])->name('api.tranferencia');
+    });
+    Route::prefix('forums')->group(function () {
+        Route::get('/', [Forum::class, 'listagemForums'])->name('api.forums.listagem');
+        Route::get('/{id}', [Forum::class, 'forum'])->name('api.forum');
+        Route::post('/', [Forum::class, 'createForum'])->name('api.forum.create');
+        Route::put('/{id}', [Forum::class, 'updateForum'])->name('api.forum.update');
+        Route::delete('/{id}', [Forum::class, 'deleteForum'])->name('api.forum.delete');
+        Route::prefix('comentarios')->group(function () {
+            Route::post('/', [Forum::class, 'createComentario'])->name('api.comentarios.create');
+            Route::put('/{id}', [Forum::class, 'updateComentario'])->name('api.comentarios.update');
+            Route::delete('/{id}', [Forum::class, 'deleteComentario'])->where('id', '[0-9]+')->name('api.comentarios.delete');
+            Route::post('/like', [Forum::class, 'likeComentario'])->name('api.comentarios.like');
+            Route::delete('/unlike', [Forum::class, 'unlikeComentario'])->name('api.comentarios.unlike');
+        });
+    });
+    Route::prefix('images')->group(function () {
+        Route::post('upload', [ImageController::class, 'storeImage'])->name('api.images.upload');
     });
 
     Route::prefix('notificacao')->group(function () {

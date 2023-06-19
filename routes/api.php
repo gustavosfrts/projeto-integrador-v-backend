@@ -51,9 +51,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::prefix('comentarios')->group(function () {
             Route::post('/', [Forum::class, 'createComentario'])->name('api.comentarios.create');
             Route::put('/{id}', [Forum::class, 'updateComentario'])->name('api.comentarios.update');
-            Route::delete('/{id}', [Forum::class, 'deleteComentario'])->name('api.comentarios.delete');
-            Route::post('/{id}/like', [Forum::class, 'likeComentario'])->name('api.comentarios.like');
-            Route::delete('/{id}/like', [Forum::class, 'unlikeComentario'])->name('api.comentarios.unlike');
+            Route::delete('/{id}', [Forum::class, 'deleteComentario'])->where('id', '[0-9]+')->name('api.comentarios.delete');
+            Route::post('/like', [Forum::class, 'likeComentario'])->name('api.comentarios.like');
+            Route::delete('/unlike', [Forum::class, 'unlikeComentario'])->name('api.comentarios.unlike');
         });
     });
     Route::prefix('images')->group(function () {

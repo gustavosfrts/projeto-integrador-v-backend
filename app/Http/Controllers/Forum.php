@@ -235,12 +235,22 @@ class Forum extends Controller
         }
     }
 
-    function likeComentario(Request $request, $id)
+    function likeComentario(Request $request)
     {
         try {
+            $request->validate([
+                'comentario_id' => 'required|integer'
+            ]);
+            $like = LikeComentario::where('usuario_id', $request->user()->id)->where('comentario_id', $request->comentario_id)->first();
+            if ($like) {
+                return response()->json([
+                    'data' => $like,
+                    'error' => 'Você já curtiu esse comentário'
+                ], 400);
+            }
             $like = new LikeComentario();
             $like->usuario_id = $request->user()->id;
-            $like->comentario_id = $id;
+            $like->comentario_id = $request->comentario_id;
             $like->save();
             return response()->json([
                 'data' => $like,
@@ -254,10 +264,14 @@ class Forum extends Controller
         }
     }
 
-    function unlikeComentario(Request $request, $id)
+    function unlikeComentario(Request $request)
     {
         try {
-            $like = LikeComentario::where('usuario_id', $request->user()->id)->where('comentario_id', $id)->first();
+            $request->validate([
+                'comentario_id' => 'required|integer'
+            ]);
+
+            $like = LikeComentario::where('usuario_id', $request->user()->id)->where('comentario_id', $request->comentario_id)->first();
             $like->delete();
             return response()->json([
                 'data' => $like,

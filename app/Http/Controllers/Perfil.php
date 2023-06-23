@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use \App\Models\ImagemPerfil;
-use App\Models\Usuario;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class Perfil extends Controller
 {
     public function perfil(Request $request)
     {
         try {
-            $user = $request->user();
+            $user = Auth::user();
             $response = $user;
             $response['imagem_perfil'] = ImagemPerfil::getImagemPerfil($user->id);
 
@@ -26,19 +27,30 @@ class Perfil extends Controller
 
     public function update(Request $request) {
         try {
-            $fields = $request->only('nome', 'email', 'cpfcnpj', 'telefone');
+            $fields = $request->only('nome', 'email', 'cpfcnpj', 'telefone', 'password');
             foreach ($fields as $key => $value) {
                 if ($value == null) {
                     unset($fields[$key]);
                 }
             }
 
+            if (count($fields) == 0) {
+                return response()->json([
+                    'error' => 'Nenhum campo foi informado.'
+                ], 400);
+            }
+
             $user = $request->user();
             foreach ($fields as $key => $value){
+                if ($key == 'password') {
+                    $user[$key] = Hash::make($value);
+                    continue;
+                }
                 $user[$key] = $value;
             }
             $user->save();
-            return response()->json(200);
+            Auth::setUser($user);
+            return response()->json($user,200);
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Erro: ' . $e->getMessage()

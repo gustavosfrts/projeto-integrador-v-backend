@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Produto as ModelProduto;
 use App\Models\Usuario;
 use App\Models\UsuarioProduto;
+use App\Models\Garantia;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,8 +62,19 @@ class Produto extends Controller
                     'error' => 'Usuário produto não encontrado'
                 ], 404);
             }
+
+            if($usuario_produto->primeiro_usuario) {
+                $usuario_produto->data_compra = date('Y-m-d', strtotime(date("Y-m-d"). ' + 1 years'));
+            }
+
             $usuario_produto->usuario_id = $new_user->id;
+            $usuario_produto->primeiro_usuario = 0;
+            $garantia = Garantia::where('usuario_produto_id', $usuario_produto->id)->first();
+            $garantia->usuario_id = $new_user->id;
+
             $usuario_produto->save();
+            $garantia->save();
+
             return response()->json([
                 'data' => $usuario_produto,
                 'error' => null

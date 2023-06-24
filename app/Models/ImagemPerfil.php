@@ -25,7 +25,7 @@ class ImagemPerfil extends Model
                 $image = self::where('usuario_id', $user_id)->first();
                 $antiga_foto = $image->caminho;
                 File::delete(public_path('/storage/imagem_perfil' . $antiga_foto));
-                self::update('caminho', $nova_foto)->where('usuario_id', $user_id);
+                self::update(['caminho', $nova_foto])->where('usuario_id', $user_id);
                 return true;
             }
 

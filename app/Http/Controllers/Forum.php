@@ -6,6 +6,7 @@ use App\Models\Comentario;
 use App\Models\Forum as ModelsForum;
 use App\Models\ImagemForum;
 use App\Models\LikeComentario;
+use App\Models\LikeForum;
 use App\Models\Usuario;
 use Exception;
 use Illuminate\Http\Request;
@@ -145,8 +146,29 @@ class Forum extends Controller
             $forum = ModelsForum::find($id);
             $comentarios = Comentario::where('forum_id', $forum->id)->get();
             foreach ($comentarios as $comentario) {
+                $likes = LikeComentario::where('comentario_id', $comentario->id)->get();
+                foreach ($likes as $like) {
+                    $like->delete();
+                }
+                $filhosComentarios = Comentario::where('comentario_id', $comentario->id)->get();
+                foreach ($filhosComentarios as $filhoComentario) {
+                    $likesFilhosComentarios = LikeComentario::where('comentario_id', $filhoComentario->id)->get();
+                    foreach ($likesFilhosComentarios as $likeFilhoComentario) {
+                        $likeFilhoComentario->delete();
+                    }
+                    $filhosComentarios1 = Comentario::where('comentario_id', $filhoComentario->id)->get();
+                    foreach ($filhosComentarios1 as $filhoComentario1) {
+                        $filhoComentario1->delete();
+                    }
+                    $filhoComentario->delete();
+                }
                 $comentario->delete();
             }
+            $likesForum = LikeForum::where('forum_id', $forum->id)->get();
+            foreach ($likesForum as $likeForum) {
+                $likeForum->delete();
+            }
+
             $forum->delete();
             return response()->json([
                 'data' => $forum,

@@ -49,6 +49,7 @@ class Perfil extends Controller
                 $user[$key] = $value;
             }
             $user->save();
+            ImagemPerfil::postImagemPerfil($user->id, $request->only('foto_perfil')['foto_perfil']);
             Auth::setUser($user);
             return response()->json($user,200);
         } catch (Exception $e) {
@@ -68,7 +69,7 @@ class Perfil extends Controller
                 $nome = uniqid(time()) . $nomeOriginal . ".$extensao";
                 $arquivo = $request->file('image')->move(public_path('storage/imagem_perfil/'), $nome);
                 return response()->json([
-                    'data' => $arquivo->getFilename()
+                    'data' => url('/') . '/storage/imagem_perfil/' . $arquivo->getFilename()
                 ], 200);
             }
             return response()->json([

@@ -27,7 +27,7 @@ class Garantia extends Controller
                 } else {
                     $garantia->validade = 'Vitalícia';
                 }
-                $garantia->data_compra = date('d/m/Y', $garantia->data_compra);
+                //$garantia->data_compra = date('d/m/Y', $garantia->data_compra);
             }
             return response()->json([
                 'data' => $garantias,

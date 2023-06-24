@@ -17,7 +17,13 @@ class Garantia extends Controller
             foreach ($garantias as $garantia) {
                 if ($garantia->primeiro_usuario == 0) {
                     $date = new Carbon($garantia->data_compra);
-                    $garantia->validade = $date->addYear()->format('d/m/Y');
+                    $hoje = new Carbon(date("Y-m-d"));
+                    if($hoje->gt($date)){
+                        $garantia->hash = 'Expirada';
+                        $garantia->validade = 'Expirada';
+                    } else {
+                        $garantia->validade = $date->addYear()->format('d/m/Y');
+                    }
                 } else {
                     $garantia->validade = 'Vitalícia';
                 }

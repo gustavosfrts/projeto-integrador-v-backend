@@ -244,6 +244,10 @@ class Forum extends Controller
     {
         try {
             $comentario = Comentario::find($id);
+            $likes = LikeComentario::where('comentario_id', $comentario->id)->get();
+            foreach ($likes as $like) {
+                $like->delete();
+            }
             $comentario->delete();
             return response()->json([
                 'data' => $comentario,

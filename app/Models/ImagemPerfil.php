@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ImagemPerfil extends Model
 {
@@ -24,9 +25,9 @@ class ImagemPerfil extends Model
             if (self::where('usuario_id', $user_id)->exists()) {
                 $image = self::where('usuario_id', $user_id)->first();
                 $antiga_foto = $image->caminho;
-                File::delete(public_path('/storage/imagem_perfil' . $antiga_foto));
-                self::update(['caminho', $nova_foto])->where('usuario_id', $user_id);
-                return true;
+                $antiga_foto = public_path('/storage/') . substr($antiga_foto, strpos($antiga_foto, 'imagem_perfil/'));
+                File::delete($antiga_foto);
+                DB::table('imagem_perfis')->where('usuario_id', $user_id)->delete();
             }
 
             self::create([

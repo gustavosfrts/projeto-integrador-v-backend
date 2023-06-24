@@ -23,6 +23,7 @@ class AuthController extends Controller
             }
 
             $user = Usuario::where('email', $request->email)->first();
+            $user['foto'] = ImagemPerfil::where('usuario_id', auth()->id())->first()->caminho;
 
             $user['token'] = $token;
             return response()->json($user, 200);

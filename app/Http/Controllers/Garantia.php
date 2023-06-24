@@ -6,15 +6,24 @@ use Illuminate\Http\Request;
 use App\Models\Garantia as ModelGarantia;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class Garantia extends Controller
 {
     function listagemGarantias(Request $request)
     {
         try {
-            $response = ModelGarantia::listagemGarantias(Auth::user()->id);
+            $garantias = ModelGarantia::listagemGarantias(Auth::user()->id);
+            foreach ($garantias as $garantia) {
+                if ($garantia->primeiro_usuario == 0) {
+                    $date = new Carbon($garantia->data_compra);
+                    $garantia->validade = $date->addYear()->format('Y-m-d');
+                } else {
+                    $garantia->validade = 'vitalícia';
+                }
+            }
             return response()->json([
-                'data' => $response,
+                'data' => $garantias,
                 'error' => null
             ], 200);
         } catch (Exception $e) {

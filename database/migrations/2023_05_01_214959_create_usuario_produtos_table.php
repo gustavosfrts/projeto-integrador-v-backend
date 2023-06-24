@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('produto_id')->references('id')->on('produtos');
             $table->foreignId('usuario_id')->references('id')->on('usuarios');
             $table->boolean('primeiro_usuario')->default(true);
+            $table->date('data_compra')->default(date('Y-m-d'));
             $table->timestamps();
         });
     }

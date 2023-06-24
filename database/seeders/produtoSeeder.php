@@ -22,7 +22,7 @@ class produtoSeeder extends Seeder
         ]);
 
         ImagemProduto::create([
-            'caminho' => 'http://localhost:8000/storage/products/kailani.png',
+            'caminho' => 'http://http://18.228.214.223/storage/products/kailani.png',
             'produto_id' => 1,
         ]);
 
@@ -34,7 +34,7 @@ class produtoSeeder extends Seeder
         ]);
 
         ImagemProduto::create([
-            'caminho' => 'http://localhost:8000/storage/products/narciso.png',
+            'caminho' => 'http://http://18.228.214.223/storage/products/narciso.png',
             'produto_id' => 2,
         ]);
 
@@ -46,7 +46,7 @@ class produtoSeeder extends Seeder
         ]);
 
         ImagemProduto::create([
-            'caminho' => 'http://localhost:8000/storage/products/helios.png',
+            'caminho' => 'http://http://18.228.214.223/storage/products/helios.png',
             'produto_id' => 3,
         ]);
     }

@@ -12,7 +12,7 @@ class Garantia extends Model
     static function listagemGarantias($userId)
     {
         $response = DB::table('usuarios')
-            ->select("usuario_produtos.id as usuario_produto_id", 'garantias.id', 'garantias.hash', 'imagem_produtos.caminho', 'produtos.descricao', 'produtos.nome', 'usuario_produtos.primeiro_usuario')
+            ->select("usuario_produtos.id as usuario_produto_id", 'garantias.id', 'garantias.hash', 'imagem_produtos.caminho', 'produtos.descricao', 'produtos.nome', 'usuario_produtos.primeiro_usuario', 'usuario_produtos.data_compra')
             ->join('garantias', 'garantias.usuario_id', '=', "usuarios.id")
             ->join('usuario_produtos', 'garantias.usuario_produto_id', 'usuario_produtos.id')
             ->join('produtos', 'usuario_produtos.produto_id', '=', 'produtos.id')

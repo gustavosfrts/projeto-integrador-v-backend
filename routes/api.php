@@ -8,7 +8,6 @@ use App\Http\Controllers\Garantia;
 use App\Http\Controllers\Manual;
 use App\Http\Controllers\Perfil;
 use App\Http\Controllers\Forum;
-use App\Http\Controllers\ImageController;
 use \App\Http\Controllers\NotificationController;
 
 /*
@@ -49,10 +48,6 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::post('/', [Produto::class, 'transferencia'])->name('api.tranferencia');
     });
 
-    Route::prefix('images')->group(function () {
-        Route::post('upload', [ImageController::class, 'storeImage'])->name('api.images.upload');
-    });
-
     Route::prefix('notificacao')->group(function () {
         Route::get('/regastar-token', [NotificationController::class, 'resgatarNotificacao'])->name('api.notificacao.resgatar.token');
         Route::post('/cadastro-token', [NotificationController::class, 'cadastroNotificacao'])->name('api.notificacao.cadastro.token');
@@ -69,6 +64,7 @@ Route::prefix('produtos')->group(function () {
 
 Route::post("/login", [AuthController::class, "login"]);
 Route::post("/register", [AuthController::class, "register"]);
+Route::post('/register/image', [Perfil::class, 'putImage'])->name('api.perfil.put.image');
 
 Route::prefix('forums')->group(function () {
     Route::get('/', [Forum::class, 'listagemForums'])->name('api.forums.listagem');

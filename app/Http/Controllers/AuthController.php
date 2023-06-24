@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImagemPerfil;
 use App\Models\Usuario;
 use Exception;
 use Illuminate\Http\Request;
@@ -51,6 +52,7 @@ class AuthController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
             $user->save();
+            ImagemPerfil::postImagemPerfil($user->id, $request->only('foto_perfil')['foto_perfil']);
 
             $token = auth('api')->attempt(
                 [$data['email'], $data['password']]

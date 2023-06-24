@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ForumSeeder::class);
         $this->call(ComentarioSeeder::class);
         $this->call(LikeComentarioSeeder::class);
+        $this->call(ImagemPerfilSeeder::class);
         // \App\Models\Usuario::factory(10)->create();
 
         // \App\Models\Usuario::factory()->create([
